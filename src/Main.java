@@ -2,7 +2,7 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BookException {
 
 //        Bibliotekos Sistema
 //        Aprašymas:
@@ -23,6 +23,7 @@ public class Main {
         Book book2 = new Book("Knyga2", "Autorius2");
         Book book3 = new Book("Knyga3", "Autorius3");
         Book book4 = new Book("Knyga4", "Autorius4");
+        Book book5 = new Book("Knyga5", "Autorius5");
 
         //pridėti knygą į sąrašą
         library.addBook(book1);
@@ -33,18 +34,27 @@ public class Main {
         System.out.println();
 
         //pašalina knygą pagal nurodytą pavadinimą
-        System.out.println("Pašaliname Knyga2:");
-        library.removeBook("Knyga2");
-        spausdintiBooks(library.getBooks());
+        try{
+            String salinamaKnyga = "Knyga5";
+            System.out.println("Pašaliname " + salinamaKnyga);
+            library.removeBook(salinamaKnyga);
+            spausdintiBooks(library.getBooks());
+        }catch (BookException e){
+            System.out.println("Knyga nerasta.");
+        }
         System.out.println();
 
         //ieškome knygos sąraše
-        System.out.println("Iškome knygos Knyga4:");
-        try{
-            library.findBook("Knyga4");
-        } catch (BookException e) {
-            System.out.println("Knyga nerasta.");
-        }
+        String ieskomaKnyga = "Knyga2";
+        System.out.println("Ieškome knygos " + ieskomaKnyga);
+        if (library.findBook(ieskomaKnyga) == null) System.out.println("Knyga " + ieskomaKnyga + " nerasta.");
+        System.out.println();
+
+        //pridėti knygą į knygų masyvą pagal indeksą
+        int knygosIndex = 2;
+        System.out.println("Įdedame Knyga5 į indeksą: " + knygosIndex);
+        library.addBookByIndex(knygosIndex, book5);
+        spausdintiBooks(library.getBooks());
 
     }
 

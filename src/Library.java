@@ -19,27 +19,45 @@ public class Library {
         books = booksTemp;
     }
 
-    public void removeBook(String title){   //pašalina knygą pagal nurodytą pavadinimą.
+    public void addBookByIndex(int index, Book book){     //pridėti knygą į knygų masyvą pagal indeksą
         int arraySize = books.length;
-        Book[] booksTemp = new Book[arraySize-1];
+        Book[] booksTemp = new Book[arraySize + 1];
         int j = 0;
-        for (int i = 0; i < arraySize; i++){
-            if (!books[i].pavadinimas.equals(title)){
-                booksTemp[j] = books[i];
+        for (int i = 0; i <= arraySize; i++){
+            if(i == index){
+                booksTemp[i] = book;
+            }else{
+                booksTemp[i] = books[j];
                 j++;
             }
         }
         books = booksTemp;
     }
 
-    public void findBook(String title) throws BookException {     //grąžina knygą pagal nurodytą pavadinimą
+    public void removeBook(String title) throws BookException{   //pašalina knygą pagal nurodytą pavadinimą.
+        int arraySize = books.length;
+        Book[] booksTemp = new Book[arraySize-1];
+        int j = 0;
+        for (int i = 0; i < arraySize; i++){
+            if (!books[i].pavadinimas.equals(title)){
+                if(j == arraySize - 1) throw new BookException();
+                booksTemp[j] = books[i];
+                j++;
+            }
+        }
+        books = booksTemp;
+
+    }
+
+    public Book findBook(String title) {     //grąžina knygą pagal nurodytą pavadinimą
         for (int i = 0; i < books.length; i++){
             if (books[i].pavadinimas.equals(title)){
                 System.out.println("Rasta knyga: " + books[i].pavadinimas + ", autorius: " + books[i].autorius);
-                return;
+                return books[i];
             }
         }
-        throw new BookException("Nerasta knyga.");
+        return null;
+        //throw new BookException("Nerasta knyga.");
     }
 
 
